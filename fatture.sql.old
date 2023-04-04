@@ -1,0 +1,67 @@
+CREATE TABLE Cliente(
+	CodiceCliente varchar(10) NOT NULL,
+	PIva int, 
+	CodFiscale varchar(100),
+	Nome varchar(50),
+	Indirizzo varchar(100),
+	Cap int,
+	Citta varchar(100),
+	CodEsenzione varchar(100),
+	Pagamento varchar(100), 
+	PRIMARY KEY(CodiceCliente),
+	-- PIva e CodFiscale sono mutuamente esclusivi
+	CHECK((PIva IS NULL OR CodFiscale IS NULL) AND NOT(PIva IS NULL AND CodFiscale IS NULL))
+);
+
+CREATE TABLE Prodotto(
+	Codice int NOT NULL,
+	Descrizione varchar(500),
+	UM ENUM ("PZ","KG","LT") NOT NULL,
+	Prezzo float,
+	Sconto float,
+	PRIMARY KEY(Codice)
+);
+
+CREATE TABLE DatiTrasporto(
+	Id int NOT NULL AUTO_INCREMENT, 
+	SpeseVarie float,
+	NumeroColli int,
+	SpeseTrasporto float,
+	CausaleTrasporto varchar(500),
+	TrasportoACura varchar(100),
+	DataOraTrasporto datetime,
+	AspettoBeni varchar(100),
+	PRIMARY KEY(Id)
+);
+
+
+
+CREATE TABLE Fattura(
+	Numero varchar(10) NOT NULL,
+	Data date,
+	Cliente varchar(10) NOT NULL,
+	Sconto float,
+	DatiTrasporto int,
+	PRIMARY KEY(Numero),
+	FOREIGN KEY(Cliente) REFERENCES Cliente(CodiceCliente),
+	FOREIGN KEY(DatiTrasporto) REFERENCES DatiTrasporto(Id)
+	--  Posso caricare fatture datate nel futuro?
+	-- CHECK (date <= NOW())
+);
+
+
+
+
+CREATE TABLE FattProd(
+	Fattura varchar(10),
+	Prodotto int,
+	Quantita float,
+	Iva float,
+	FOREIGN KEY(Fattura) REFERENCES Fattura(Numero),
+	FOREIGN KEY(Prodotto) REFERENCES Prodotto(Codice),
+	-- Vincoli su unità di misura
+	-- CHECK ((Prodotto.UM="PZ" AND Quantita % 1 = 0) OR Prodotto.UM!="PZ"),
+	-- Entrambe definite o entrambe null
+	-- CHECK ((Prodotto.UM IS NULL AND Quantita IS NULL) OR (Prodotto.UM IS NOT NULL AND Quantita IS NOT NULL)),
+	CHECK (Iva <= 100 AND Iva >= 0)
+);
