@@ -32,7 +32,7 @@ create table dati_trasporto(
 	spese_trasp float,
 	causale_trasp varchar(500),
 	cura_trasp varchar(100) not null,
-	data_ora_trasp datetime,
+	data_ora_trasp date,
 	aspetto_beni varchar(100),
 	data_ins date default sysdate,
 	data_upd date,
