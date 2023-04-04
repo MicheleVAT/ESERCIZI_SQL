@@ -62,3 +62,4 @@ create table fatt_prod(
 	foreign key(cod_fatt) references fattura(cod_fatt),
 	foreign key(cod_prod) references prodotto(cod_prod)
 );
+
