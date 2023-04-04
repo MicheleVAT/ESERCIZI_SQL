@@ -1,0 +1,60 @@
+insert into cliente (id_cliente, rag_soc, cod_cliente, p_iva, cod_fisc, indirizzo, n_telefono, e_mail, tipo_pag, data_ins)
+values (seq_cliente.nextval, 'Acme Corporation', 'ACME01', '12345678901', '12345678901', 'Via Rossi 1, Milano', '+39021234567', 'info@acme.com', 'Bonifico Bancario', sysdate);
+
+insert into cliente (id_cliente, rag_soc, cod_cliente, p_iva, cod_fisc, indirizzo, n_telefono, e_mail, cod_ese, tipo_pag, data_ins)
+values (seq_cliente.nextval, 'Beta Spa', 'BETA01', '98765432109', '98765432109', 'Via Verdi 2, Roma', '+39067654321', 'info@beta.it', 'N2', 'Carta di Credito', sysdate);
+
+insert into cliente (id_cliente, rag_soc, cod_cliente, p_iva, cod_fisc, indirizzo, n_telefono, e_mail, tipo_pag, data_ins)
+values (seq_cliente.nextval, 'Gamma Srl', 'GAMMA01', '34567890123', '34567890123', 'Via Dante 3, Firenze', '+390551234567', 'info@gamma.it', 'Assegno', sysdate);
+
+insert into cliente (id_cliente, rag_soc, cod_cliente, p_iva, cod_fisc, indirizzo, cod_ese, tipo_pag, data_ins)
+values (seq_cliente.nextval, 'Delta Snc', 'DELTA01', '56789012345', '56789012345', 'Corso Vittorio Emanuele 4, Torino', 'N4', 'PayPal', sysdate);
+
+insert into cliente (id_cliente, rag_soc, cod_cliente, p_iva, cod_fisc, indirizzo, tipo_pag, data_ins)
+values (seq_cliente.nextval, 'Epsilon Spa', 'EPSILON01', '67890123456', '67890123456', 'Via Garibaldi 1, Milano', 'Assegno', sysdate);
+
+insert into cliente (id_cliente, rag_soc, cod_cliente, p_iva, cod_fisc, indirizzo, n_telefono, cod_ese, tipo_pag, data_ins)
+values (seq_cliente.nextval, 'Zeta Srl', 'ZETA01', '90123456789', '90123456789', 'Piazza del Popolo 2, Roma', '+39067654321', 'N3', 'Assegno', sysdate);
+
+insert into cliente (id_cliente, rag_soc, cod_cliente, p_iva, cod_fisc, indirizzo, n_telefono, tipo_pag, data_ins)
+values (seq_cliente.nextval, 'Azienda Alpha', 'ALP001', '01234567890', '01234567890', 'Via Roma 1', '+393332345678', 'Bonifico bancario', sysdate);
+
+insert into cliente (id_cliente, rag_soc, cod_cliente, p_iva, cod_fisc, indirizzo, tipo_pag, data_ins)
+values (seq_cliente.nextval, 'ABC spa', 'ABC01', '12345678999', '12345678999', 'Via Catania 20', 'Carta di credito', sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD01', 'Prodotto 1', 'PZ', 10.00, 22, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD02', 'Prodotto 2', 'KG', 5.00, 10, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD03', 'Prodotto 3', 'LT', 2.50, 4, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD04', 'Prodotto 4', 'MQ', 20.00, 22, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD05', 'Prodotto 5', 'PZ', 5.00, 10, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD06', 'Prodotto 6', 'ML', 12.50, 22, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD07', 'Prodotto 7', 'ML', 2.50, 10, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD08', 'Prodotto 8', 'LC', 20, 22, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD09', 'Prodotto 9', 'CK', 4, 4, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD10', 'Prodotto 10', 'CK', 10, 6, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD11', 'Prodotto 11', 'CP', 10, 9, sysdate);
+
+insert into prodotto (id_prodotto, cod_prod, descrizione, un_misura, prezzo, iva, data_ins)
+values (seq_prodotto.nextval, 'PROD12', 'Prodotto 12', 'PZ', 3, 4, sysdate);
+
