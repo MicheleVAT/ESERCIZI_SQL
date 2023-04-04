@@ -26,7 +26,7 @@ create table prodotto(
 );
 
 create table dati_trasporto(
-	id_trasp int not null auto_increment primary key,
+	id_trasp int not null primary key,
 	spese_varie float,
 	numero_colli int,
 	spese_trasp float,
