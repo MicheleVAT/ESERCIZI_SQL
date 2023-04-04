@@ -17,7 +17,7 @@ create table cliente(
 create table prodotto(
 	cod_prod varchar(10) not null primary key,
 	descr varchar(500) not null,
-	um enum ("PZ","KG","LT") not null,
+	um varchar(2),
 	prezzo float not null,
 	sconto float,
 	data_ins date default sysdate,
