@@ -8,10 +8,10 @@ create table cliente(
 	comune varchar(100) not null,
 	prov varchar(2) not null,
 	cod_esenzione varchar(100),
-	pagamento varchar(100), --TODO
+	pagamento varchar(100),
 	data_ins date default sysdate,
 	data_upd date,
-	deleted char(1) default "N"
+	deleted char(1) default 'N'
 );
 
 create table prodotto(
@@ -22,7 +22,7 @@ create table prodotto(
 	sconto float,
 	data_ins date default sysdate,
 	data_upd date,
-	deleted char(1) default "N"
+	deleted char(1) default 'N'
 );
 
 create table dati_trasporto(
@@ -36,7 +36,7 @@ create table dati_trasporto(
 	aspetto_beni varchar(100),
 	data_ins date default sysdate,
 	data_upd date,
-	deleted char(1) default "N"
+	deleted char(1) default 'N'
 );
 
 create table fattura(
@@ -46,7 +46,7 @@ create table fattura(
 	id_trasp int not null,
 	data_ins date default sysdate,
 	data_upd date,
-	deleted char(1) default "N",
+	deleted char(1) default 'N',
 	foreign key(cod_cli) references cliente(cod_cli),
 	foreign key(id_trasp) references dati_trasporto(id_trasp)
 );
@@ -58,7 +58,7 @@ create table fatt_prod(
 	iva float not null,
 	data_ins date default sysdate,
 	data_upd date,
-	deleted char(1) default "N",
+	deleted char(1) default 'N',
 	foreign key(cod_fatt) references fattura(cod_fatt),
 	foreign key(cod_prod) references prodotto(cod_prod)
 );
