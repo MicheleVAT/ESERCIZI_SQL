@@ -8,13 +8,11 @@ drop sequence seq_cli;
 drop sequence seq_prod;
 drop sequence seq_dt;
 drop sequence seq_fatt;
-drop sequence seq_fp;
 
 create sequence seq_cli minvalue 0 start with 0 increment by 1 nocache;
 create sequence seq_prod minvalue 0 start with 0 increment by 1 nocache;
 create sequence seq_dt minvalue 0 start with 0 increment by 1 nocache;
 create sequence seq_fatt minvalue 0 start with 0 increment by 1 nocache;
-create sequence seq_fp minvalue 0 start with 0 increment by 1 nocache;
 
 
 create table cliente(
@@ -78,7 +76,6 @@ create table fattura(
 );
 
 create table fatt_prod(
-    id_fp number(38) not null primary key,
 	id_fatt number(38) not null,
 	id_prod number(38) not null,
 	qt number(20,3) not null,
@@ -87,6 +84,7 @@ create table fatt_prod(
 	data_ins date default sysdate,
 	data_upd date,
 	deleted char(1) default 'N',
+    primary key(id_fatt,id_prod),
 	foreign key(id_fatt) references fattura(id_fatt),
 	foreign key(id_prod) references prodotto(id_prod)
 );
