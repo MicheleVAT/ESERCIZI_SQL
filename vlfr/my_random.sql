@@ -21,8 +21,6 @@ CREATE OR REPLACE PACKAGE BODY my_random AS
      IS
         d date;
      BEGIN
-            dbms_output.put('PROVA2');
-            --d := TO_DATE(DBMS_RANDOM.VALUE(TO_CHAR(start_d),TO_CHAR(end_d)));
             select to_date('2010-01-01', 'yyyy-mm-dd')+trunc(dbms_random.value(1,1000)) into d from dual;
             return d;
      END random_date;
