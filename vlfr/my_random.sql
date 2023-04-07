@@ -1,6 +1,6 @@
 CREATE OR REPLACE PACKAGE my_random AS
     FUNCTION random_string(p_Characters varchar2, p_length number) return VARCHAR2;
-    FUNCTION random_date(start_d VARCHAR2, end_d VARCHAR2) return DATE;
+    FUNCTION random_date return DATE;
 END my_random;
 /
 CREATE OR REPLACE PACKAGE BODY my_random AS
@@ -16,12 +16,18 @@ CREATE OR REPLACE PACKAGE BODY my_random AS
         RETURN l_res;
      END random_string;
      
-     FUNCTION random_date(start_d VARCHAR2, end_d VARCHAR2)
+     FUNCTION random_date
         RETURN DATE
      IS
         d date;
      BEGIN
-            select to_date('2010-01-01', 'yyyy-mm-dd')+trunc(dbms_random.value(1,1000)) into d from dual;
+              SELECT TO_DATE(
+              TRUNC(
+                   DBMS_RANDOM.VALUE(TO_CHAR(DATE '2019-01-01','J')
+                                    ,TO_CHAR(DATE '2022-12-31','J')
+                                    )
+                    ),'J'
+               ) into d FROM DUAL;
             return d;
      END random_date;
 END my_random;

@@ -19,7 +19,7 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
         FOR crs_val IN crs_cli LOOP
             rnd_int := dbms_random.value(1,max_num);
             cod_fatt := my_random.random_string('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',10);
-            data_fatt := my_random.random_date(TO_DATE('01-01-2019','DD-MM-YYYY'),TO_DATE('31-12-2022','DD-MM-YYYY'));
+            data_fatt := my_random.random_date();
             id_trasp := seq_dt.nextval();
             INSERT INTO dati_trasporto(
                     id_trasp,
