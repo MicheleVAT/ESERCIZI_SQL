@@ -29,11 +29,11 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
                 id_trasp,
                 'Prova Cura Trasp'
             );
-             
-             imponibile := dbms_random.value(1,100);
-             imposta := dbms_random.value(1,100);
-        COMMIT;
-            INSERT INTO fattura(id_fatt,cod_fatt,data_fatt,id_cli,id_trasp,imponibile,imposta,tot_merce,tot_doc)
+            COMMIT; 
+        imponibile := 0.0;--dbms_random.value(1,100);
+        imposta := 0.0;--dbms_random.value(1,100);
+        
+        INSERT INTO fattura(id_fatt,cod_fatt,data_fatt,id_cli,id_trasp,imponibile,imposta)
         VALUES(
             seq_fatt.nextval,
             cod_fatt,
@@ -41,9 +41,7 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
             crs_val.id_cli,
             id_trasp,
             imponibile,
-            imposta,
-            NULL,
-            NULL
+            imposta
             );
         COMMIT;
         END LOOP;
@@ -54,17 +52,20 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
         qt NUMBER(10,2);
         sconto NUMBER(10,2);
         sel_sconto NUMBER(10,2);
-        tot_merce NUMBER(20,2);
+        my_tot_merce NUMBER(20,2);
         spese NUMBER(20,2);
         imp NUMBER(20,2);
+        tot_imp NUMBER(20,2);
         spese_varie NUMBER(20,2);
         spese_trasp NUMBER(20,2);
+        prova INTEGER;
         CURSOR crs_fatt IS
            SELECT id_fatt,id_trasp FROM fattura;
     BEGIN
         FOR f IN crs_fatt LOOP--PER OGNI FATTURA
             num_prod := dbms_random.value(1,5);
-            tot_merce := 0;
+            my_tot_merce := 0;
+            tot_imp := 0;
             FOR p IN (SELECT id_prod,um,prezzo,iva
                 FROM   (
                     SELECT id_prod,um,prezzo,iva
@@ -88,15 +89,39 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
                 VALUES(f.id_fatt,p.id_prod,qt,sconto,22);
                 COMMIT;
                 imp := p.prezzo * qt - sconto;--calcolo imponibile
-                tot_merce := tot_merce + imp * p.iva;--applico l' iva
+                tot_imp := tot_imp + imp;
+                my_tot_merce := my_tot_merce + imp * p.iva;--applico l' iva
                 
             END LOOP;
             --aggiorna totali
             SELECT spese_trasp INTO spese_trasp FROM dati_trasporto WHERE id_trasp=f.id_trasp;
             SELECT spese_varie INTO spese_varie FROM dati_trasporto WHERE id_trasp=f.id_trasp;
+            
+            SELECT id_fatt INTO prova FROM fattura WHERE id_fatt = f.id_fatt;
+            
             UPDATE fattura
-            SET tot_doc=tot_merce + spese_trasp + spese_varie,tot_merce=tot_merce
+            SET imponibile=tot_imp
             WHERE id_fatt = f.id_fatt;
+            COMMIT;
+            
+            UPDATE fattura
+            SET tot_merce=my_tot_merce
+            WHERE id_fatt = f.id_fatt;
+            COMMIT;
+               
+            IF spese_trasp IS NULL THEN
+                spese_trasp := 0;
+            END IF;
+            
+            IF spese_varie IS NULL THEN
+                spese_varie := 0;
+            END IF;
+            
+            --my_tot_merce := my_tot_merce + spese_trasp + spese_varie;
+            UPDATE fattura
+            SET tot_doc=my_tot_merce + spese_trasp + spese_varie
+            WHERE id_fatt = f.id_fatt;
+            COMMIT;
             
         END LOOP;
     END upload_fatt_prod;
