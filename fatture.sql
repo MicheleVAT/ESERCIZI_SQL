@@ -65,7 +65,6 @@ create table fattura(
 	id_cli number(38) not null,
 	id_trasp number(38) not null,
     imponibile number(20,2) not null,
-    imposta number(20,2) not null,
     tot_merce number(20,2),
     tot_doc number(20,2),
 	data_ins date default sysdate,

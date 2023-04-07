@@ -4,6 +4,7 @@ CREATE OR REPLACE PACKAGE proc_fatture AS
 END proc_fatture;
 /
 CREATE OR REPLACE PACKAGE BODY proc_fatture AS
+
     PROCEDURE upload_fatture (max_num INTEGER) AS
         CURSOR crs_cli IS
             SELECT id_cli FROM cliente;
@@ -11,7 +12,6 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
         cod_fatt VARCHAR2(10);
         data_fatt DATE;
         imponibile number(20,2);
-        imposta number(20,2);
         tot_merce number(20,2);
         id_trasp integer;
     
@@ -23,25 +23,27 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
             id_trasp := seq_dt.nextval();
             INSERT INTO dati_trasporto(
                     id_trasp,
-                    cura_trasp
+                    cura_trasp,
+                    spese_trasp,
+                    spese_varie
             )
             VALUES (
                 id_trasp,
-                'Prova Cura Trasp'
+                'Prova Cura Trasp',
+                dbms_random.value(1,500),
+                dbms_random.value(1,500)
             );
             COMMIT; 
         imponibile := 0.0;--dbms_random.value(1,100);
-        imposta := 0.0;--dbms_random.value(1,100);
         
-        INSERT INTO fattura(id_fatt,cod_fatt,data_fatt,id_cli,id_trasp,imponibile,imposta)
+        INSERT INTO fattura(id_fatt,cod_fatt,data_fatt,id_cli,id_trasp,imponibile)
         VALUES(
             seq_fatt.nextval,
             cod_fatt,
             data_fatt,
             crs_val.id_cli,
             id_trasp,
-            imponibile,
-            imposta
+            imponibile
             );
         COMMIT;
         END LOOP;
@@ -59,6 +61,7 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
         spese_varie NUMBER(20,2);
         spese_trasp NUMBER(20,2);
         prova INTEGER;
+        impst NUMBER(20,2);
         CURSOR crs_fatt IS
            SELECT id_fatt,id_trasp FROM fattura;
     BEGIN
@@ -90,7 +93,7 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
                     COMMIT;
                     imp := p.prezzo * qt - sconto;--calcolo imponibile
                     tot_imp := tot_imp + imp;
-                    my_tot_merce := my_tot_merce + imp * p.iva;--applico l' iva
+                    my_tot_merce := my_tot_merce + imp * p.iva / 100;--applico l' iva
                     
                 END LOOP;
                 --aggiorna totali
@@ -124,4 +127,5 @@ CREATE OR REPLACE PACKAGE BODY proc_fatture AS
                 COMMIT;
         END LOOP;
     END upload_fatt_prod;
+
 END proc_fatture;
